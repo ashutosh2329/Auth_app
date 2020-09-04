@@ -4,12 +4,12 @@ const bodyParser = require("body-parser");
 const ejs = require("ejs");
 const load = require('lodash');
 const mongoose = require("mongoose");
+const encrypt = require('mongoose-encryption');
 const app = express();
 
 
 // mongodb connection
 mongoose.connect('mongodb://localhost:27017/AuthDB', {useNewUrlParser: true, useUnifiedTopology: true });
-
 
 
 // ejs setting
@@ -21,12 +21,17 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 
 
-// user schema and model
-const userSchema = {
+// user schema 
+const userSchema = new mongoose.Schema ({
   email: String,
   password: String
-};
+});
+// encryption
+const secret = "Thisisourlittlesecreat";
+userSchema.plugin(encrypt, { secret: secret, encryptedFields: ["password"] });
+// user model
 const User = mongoose.model('User', userSchema);
+
 
 
 //home route
