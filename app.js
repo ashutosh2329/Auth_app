@@ -9,17 +9,23 @@ const md5 = require('md5');
 const app = express();
 
 
+
 // mongodb connection
 mongoose.connect('mongodb://localhost:27017/AuthDB', {useNewUrlParser: true, useUnifiedTopology: true });
+
 
 
 // ejs setting
 app.set('view engine', 'ejs');
 
 
+
+
 // bodyparser use and ejs template 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
+
+
 
 
 // user schema 
