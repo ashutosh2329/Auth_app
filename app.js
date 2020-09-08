@@ -26,6 +26,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 
 
+
 // user schema 
 const userSchema = new mongoose.Schema ({
   email: String,
