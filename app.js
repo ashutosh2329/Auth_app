@@ -13,8 +13,12 @@ const app = express();
 mongoose.connect('mongodb://localhost:27017/AuthDB', {useNewUrlParser: true, useUnifiedTopology: true });
 
 
+
+
 // ejs setting
 app.set('view engine', 'ejs');
+
+
 
 
 // bodyparser use and ejs template 
