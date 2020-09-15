@@ -13,7 +13,7 @@ const findOrCreate = require('mongoose-findorcreate');
 
 const app = express();
 // ejs setting
-app.set("view engine", "ejs");
+app.set('view engine', 'ejs');
 
 
 
