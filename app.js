@@ -21,13 +21,14 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 
-
+// declaring session
 app.use(session({
   secret: "secure",
   resave: false,
   saveUninitialized: false
 }));
 
+// initialising session
 app.use(passport.initialize());
 app.use(passport.session());
 
