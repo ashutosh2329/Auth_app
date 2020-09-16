@@ -67,7 +67,7 @@ passport.deserializeUser(function(id, done) {
   });
 });
 
-
+// google strategy
 passport.use(new GoogleStrategy({
     clientID: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
@@ -88,11 +88,12 @@ app.get("/",function(req,res){
 	res.render("home");
 });
 
+// google auth route
 app.get("/auth/google",
   passport.authenticate("google", { scope: ["profile"] })
 );
 
-
+// main page loading route through google
 app.get("/auth/google/secrets", 
   passport.authenticate("google", { failureRedirect: "/login" }),
   function(req, res) {
@@ -112,6 +113,7 @@ app.get("/login",function(req,res){
 	res.render("login");
 });
 
+// secrets route
 app.get("/secrets", function(req,res){
 	if(req.isAuthenticated()){
 		res.render("secrets");
@@ -120,6 +122,7 @@ app.get("/secrets", function(req,res){
 	}
 });
 
+// logout route
 app.get("/logout", function(req, res){
 	req.logout();
 	res.redirect("/");
