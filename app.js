@@ -47,18 +47,20 @@ const userSchema = new mongoose.Schema ({
   googleId: String
 });
 
+// including plugins
 userSchema.plugin(passportLocalMongoose);
 userSchema.plugin(findOrCreate);
 
 // user model
 const User = mongoose.model('User', userSchema);
-
+// creating strategy
 passport.use(User.createStrategy());
 
+// serializer and meta data for passport
 passport.serializeUser(function(user, done) {
   done(null, user.id);
 });
-
+// deserializer and meta data for passport
 passport.deserializeUser(function(id, done) {
   User.findById(id, function(err, user) {
     done(err, user);
