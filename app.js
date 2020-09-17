@@ -132,7 +132,7 @@ app.get("/logout", function(req, res){
 	res.redirect("/");
 })
 
-
+// submit route
 app.get("/submit", function(req, res){
 	if(req.isAuthenticated()){
 		res.render("submit");
@@ -140,7 +140,7 @@ app.get("/submit", function(req, res){
 		res.redirect("/login");
 	}
 });
-
+// submit post route
 app.post("/submit", function(req, res){
 	const submitSecret = req.body.secret;
 
