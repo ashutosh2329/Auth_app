@@ -82,7 +82,7 @@ passport.use(new GoogleStrategy({
   }
 ));
 
-
+// get route
 //home route
 app.get("/",function(req,res){
 	res.render("home");
@@ -132,6 +132,7 @@ app.get("/logout", function(req, res){
 	res.redirect("/");
 })
 
+
 // submit route
 app.get("/submit", function(req, res){
 	if(req.isAuthenticated()){
@@ -140,6 +141,10 @@ app.get("/submit", function(req, res){
 		res.redirect("/login");
 	}
 });
+
+
+
+// post route
 // submit post route
 app.post("/submit", function(req, res){
 	const submitSecret = req.body.secret;
