@@ -99,32 +99,32 @@ app.get("/auth/google/secrets",
   function(req, res) {
     // Successful authentication, redirect home.
     res.redirect("/secrets");
-});
+// });
 
 
-//register route
-app.get("/register",function(req,res){
-	res.render("register");
-});
+// //register route
+// app.get("/register",function(req,res){
+// 	res.render("register");
+// });
 
 
-// login route
-app.get("/login",function(req,res){
-	res.render("login");
-});
+// // login route
+// app.get("/login",function(req,res){
+// 	res.render("login");
+// });
 
-// secrets route
-app.get("/secrets", function(req,res){
-	User.find({"secret": {$ne: null}}, function(err, foundUsers){
-		if(err){
-			console.log(err);
-		}else{
-			if(foundUsers){
-				res.render("secrets", {userWithSecrets: foundUsers});
-			}
-		}
-	})
-});
+// // secrets route
+// app.get("/secrets", function(req,res){
+// 	User.find({"secret": {$ne: null}}, function(err, foundUsers){
+// 		if(err){
+// 			console.log(err);
+// 		}else{
+// 			if(foundUsers){
+// 				res.render("secrets", {userWithSecrets: foundUsers});
+// 			}
+// 		}
+// 	})
+// });
 
 // logout route
 app.get("/logout", function(req, res){
