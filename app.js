@@ -10,36 +10,24 @@ const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const findOrCreate = require('mongoose-findorcreate');
-
 const app = express();
 // ejs setting
 app.set('view engine', 'ejs');
-
-
-
 // bodyparser use and ejs template 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
-
 // declaring session
 app.use(session({
   secret: "secure",
   resave: false,
   saveUninitialized: false
 }));
-
 // initialising session
 app.use(passport.initialize());
 app.use(passport.session());
-
 // mongodb connection
 mongoose.connect('mongodb://localhost:27017/AuthDB', {useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.set('useCreateIndex', true);
-
-
-
-
-
 // user schema 
 const userSchema = new mongoose.Schema ({
   email: String,
@@ -47,16 +35,13 @@ const userSchema = new mongoose.Schema ({
   googleId: String,
   secret: String
 });
-
 // including plugins
 userSchema.plugin(passportLocalMongoose);
 userSchema.plugin(findOrCreate);
-
 // user model
 const User = mongoose.model('User', userSchema);
 // creating strategy
 passport.use(User.createStrategy());
-
 // serializer and meta data for passport
 passport.serializeUser(function(user, done) {
   done(null, user.id);
@@ -67,7 +52,6 @@ passport.deserializeUser(function(id, done) {
     done(err, user);
   });
 });
-
 // google strategy
 passport.use(new GoogleStrategy({
     clientID: process.env.CLIENT_ID,
@@ -81,18 +65,15 @@ passport.use(new GoogleStrategy({
     });
   }
 ));
-
 // get route
 //home route
 app.get("/",function(req,res){
 	res.render("home");
 });
-
 // google auth route
 app.get("/auth/google",
   passport.authenticate("google", { scope: ["profile"] })
 );
-
 // main page loading route through google
 app.get("/auth/google/secrets", 
   passport.authenticate("google", { failureRedirect: "/login" }),
@@ -100,19 +81,14 @@ app.get("/auth/google/secrets",
     // Successful authentication, redirect home.
     res.redirect("/secrets");
 });
-
-
 //register route
 app.get("/register",function(req,res){
 	res.render("register");
 });
-
-
 // login route
 app.get("/login",function(req,res){
 	res.render("login");
 });
-
 // secrets route
 app.get("/secrets", function(req,res){
 	User.find({"secret": {$ne: null}}, function(err, foundUsers){
@@ -125,14 +101,11 @@ app.get("/secrets", function(req,res){
 		}
 	})
 });
-
 // logout route
 app.get("/logout", function(req, res){
 	req.logout();
 	res.redirect("/");
 })
-
-
 // submit route
 app.get("/submit", function(req, res){
 	if(req.isAuthenticated()){
@@ -141,9 +114,6 @@ app.get("/submit", function(req, res){
 		res.redirect("/login");
 	}
 });
-
-
-
 // post route
 // submit post route
 app.post("/submit", function(req, res){
